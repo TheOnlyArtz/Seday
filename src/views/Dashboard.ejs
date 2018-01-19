@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Welcome!</title>
+	<% include partials/head %>
+	<style type="text/css">
+		.circular {
+			width: 150px;
+			height: 150px;
+			border: 5px solid black !important;
+			border-radius: 150px;
+	        -webkit-border-radius: 150px;
+	        -moz-border-radius: 150px;
+			background: url("https://images.duckduckgo.com/iu/?u=http%3A%2F%2Fstatic.zerochan.net%2FJack.Atlas.full.2037583.jpg&f=1") center;
+	}
+	</style>
+	<script type="text/javascript">
+		$(document).ready(function() {
+            
+            //connect to socket
+            const socket = io.connect();
+            
+            
+            console.log($('#prefixChangeBtn button'))
+			$('#prefixChangeBtn button').click(function() {
+				let formString = '<form id="prefixForm">\
+					<input required name="prefixCtx" id="prefixTxt" type="text" placeholder="prefix" style="width: 10%"/>\
+					<button class="waves-effect waves-light btn" type="submit" name="action">Submit</button>\
+				</form>'
+				$('#prefixChangeBtn').html(formString);
+				$("#prefixChangeBtn input").focus();
+                
+                const prefixForm = $('#prefixForm');
+                const prefixTxt = $('#prefixTxt');
+                
+                prefixForm.submit(function(e) {
+                    e.preventDefault();
+                    socket.emit('new prefix', prefixTxt.val(), "<%= guildID %>");
+                    location.reload();
+                })
+                
+			});
+		});
+	</script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">
+</head>
+<body style="background-color: #97c6c6">
+
+	<div class="container">
+		<div class="row">
+			<div class="col s12">
+				<div class="center-align">
+					<p id="prefixChangeTitle">Change bot's prefix: Current (<%= guildData && guildData.prefix ? guildData.prefix : '='%>)</p>
+					<div id="prefixChangeBtn">
+						<button class="waves-effect waves-light btn" id="button">Change</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

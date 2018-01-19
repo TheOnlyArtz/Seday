@@ -1,0 +1,6 @@
+{
+  "scopes" : ["identify", "guilds"],
+  "clientID": "ID",
+  "clientSecret": "SECRET",
+  "dash_secret": "SECRET"
+}

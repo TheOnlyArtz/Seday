@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Welcome!</title>
+	<% include partials/head %>
+	<style type="text/css">
+	</style>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">
+</head>
+<body style="background-color: #97c6c6">
+	<div class="container">
+		<h1 class="center-align">Welcome <%= user.username %></h1>
+		<div class="row">
+			<div class="center-align">
+			<% for (let i = 0; i < user.guilds.length; i++) { %>
+				<% if (checkforperm(user.guilds[i].permissions) === false) continue; %>
+				<% let iconURL = `https://cdn.discordapp.com/icons/${user.guilds[i].id}/${user.guilds[i].icon}.jpg` %>
+				<div class="col s3">
+					<a href="/dashboard/<%= user.guilds[i].id %>">
+						<figure class="circular animated bounceIn" style="width: 110px; height: 110px; border: 5px solid black !important; border-radius: 150px; -webkit-border-radius: 150px;-moz-border-radius: 150px;background: url(<%= iconURL %>) center;"></figure>
+					</a>
+					<p><%= user.guilds[i].name %></p>
+				</div>
+			<% } %>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
