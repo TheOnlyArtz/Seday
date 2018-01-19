@@ -71,13 +71,12 @@ This is a big step of getting our application to run!<br>
 Let's make the client to connect Discord, Shall we?<br>
 We will do this by adding our config JSON which we've created before to the code<br>
 ```js
-const config = require('./config.json');
-```<br>
+const config = require('./config.json');```
 
-The next step is making the Client to connect Discord<br>
-
+The next step is making the Client to connect Discord
+<br>
 ```
-Client.login(config.token)```<br>
+Client.login(config.token)```
 
 As you can see we are using our config to take the token without the need to expose it inside the main file.<br>
 
@@ -86,8 +85,6 @@ Let's make sure our app is connected by adding those line of code to `main.js`<b
 Client.on('ready', () => {
     console.log('ready!');
 })```
-
-<br>
 
 Now our `main.js` should look just like this:<br>
 ```js
@@ -100,6 +97,5 @@ Client.login(config.token);
 Client.on('ready', () => {
     console.log('ready');
 });```
-<br>
 
 Run our application by running this command `node main.js` inside the console.
