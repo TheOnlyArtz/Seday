@@ -65,7 +65,8 @@ This is what your file should look like now<br>
 ```js
 const Discord = require('discord.js');
 const Client = new Discord.Client();
-```<br>
+```
+<br>
 This is a big step of getting our application to run!<br>
 Let's make the client to connect Discord, Shall we?<br>
 We will do this by adding our config JSON which we've created before to the code<br>
@@ -96,6 +97,7 @@ Client.login(config.token);
 
 Client.on('ready', () => {
     console.log('ready');
-});```
+});
+```
 <br>
 Run our application by running this command `node main.js` inside the console.
