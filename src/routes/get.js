@@ -29,7 +29,7 @@ Router.get('/oauth/redirect', async function(req, res) {
   initData(req, res);
 });
 
-Router.get('/dashboard', ifLoggedMiddleware, function(req, res) {
+Router.get('/me', ifLoggedMiddleware, function(req, res) {
   return res.set(200).send({user: req.session.user, auth: req.session.auth});
 });
 
@@ -90,7 +90,7 @@ function initData(req, res) {
             req.session.auth = response['body'];
             req.session.user = user['body'];
             req.session.user.guilds = guilds['body'];
-            res.redirect('/dashboard');
+            res.redirect('/');
           })
         })
       });
