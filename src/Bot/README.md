@@ -153,4 +153,43 @@ Let's invoke `rethinkdbdash` connection function<br>
 const r = require('rethinkdbdash')({db: 'Dashcord', servers: [{host: 'localhost', port: 28015}]});
 ```
 Great! let's test if we are connected. go ahead and boot up your RethinkDB server and run `node main.js` in the console<br>
-Did you get the next message: `Creating a pool connected to localhost:28015`? If you did, you are good to go
+Did you get the next message: `Creating a pool connected to localhost:28015`? If you did, you are good to go.
+##### Fetching essential data
+Ok, we are in the main part of the integration.<br>
+We will make the fetching very effective by fetching each guild's config from our database<br>
+And storing each guild's config in a [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)<br>
+But we will use a modified map called [Collection](https://github.com/hydrabolt/discord.js/blob/master/src/util/Collection.js)<br>
+Because it is easier to maintain and work with.<br>
+Add the next line of code below `const config = require('./config.json);`
+```js
+Client.guildsConfig = new Discord.Collection();
+```
+All of the next code should be inside our `ready` event! (If you don't understand, Don't worry! a final code will be below)<br>
+Let's start by looping through our guilds, our `Client` holds a `guilds` property which give us a look of the guilds your bot is inside.<br>
+And it would be easy, why? because guild comes in a `Collection` shape, but it's not ready to be "loopped" through, yet!<br>
+Let's invoke a method called `.array()` which will make our `Collection` to be an array.<br>
+```js
+const guilds = Client.guilds.array();
+```
+Great we got our guilds inside an array! And now we can loop through them, let's do that<br>
+```js
+for (let guild of guilds) {
+    let config = await r.table('Guilds').get(guild.id).run();
+    Client.guildsConfig.set(guild.id, config ? config : null);
+}
+```
+Ok ok ok... I know, It's may be confusing for you but we will go through each like and explain it to you<br>
+```js
+for (let guild of guilds)
+```
+This is what called a `for..of` loop, we are having our variable - `let guild` which represents each guild by itself inside the loop.<br>
+```js
+let config = await r.table('Guilds').get(guild.id).run();
+```
+So if you've followed the [RethinkDB setup]() you should have a table inside your database called `Guilds`<br>
+What we are doing in this line is basically fetching the specific guild from our database, more info about `get` method for rethinkDB, [here](https://www.rethinkdb.com/api/javascript/get/)<br>
+```js
+Client.guildsConfig.set(guild.id, config ? config : null)
+```
+Ok so basically we are pushing the guild into our Collection we've created earlier, and we're using the `guild.id` as the key<br>
+And the actual data is the config we've fetched from our database (If no config the code will insert `null`)
