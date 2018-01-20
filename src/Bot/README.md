@@ -109,8 +109,48 @@ const config = require('./config.json');;
 Client.login(config.token);
 
 Client.on('ready', () => {
-    console.log('ready');
+    console.log('ready!');
 });
 ```
 
-Run our application by running this command `node main.js` inside the console.
+Run our application by running this command `node main.js` inside the console.<br>
+After you got that `ready!` printed inside your console we're good to go to the next step
+
+### Dashboard Integration
+Ok, We are splitting this part into 4 different parts
+<ul>
+    <li>Adding a redirection URL for our application</li>
+    <li>Connecting our bot to a RethinkDB database</li>
+    <li>Fetching essential data being imported by our users</li>
+    <li>Using the data we've fetched</li>
+</ul>
+
+##### Adding a redirection URL for our app
+A redirection URL is an important part!<br>
+We need it because while we are authorizing to Discord services, Discord will redirect us to that URL<br>
+And we will get a `grant_code` which give us the permissions and the essentials to get every data we need from the user who just got authorized.<br>
+Let's start by going to [our apps](https://discordapp.com/developers/applications/me) and we will pick our bot<br>
+You will see a section called `REDIRECT URI(S)` Go ahead type the next URL<br>
+<div align="center">
+    <p><img src="https://i.imgur.com/056tXcq.png"></p>
+</div>
+
+**`Press save`**
+##### Connecting our bot to a RethinkDB database
+**Please, Do not keep going untill you are setting up RethinkDB** [How to setup]()<br>
+Ok, You might ask yourself, "Why do I need a database"?<br>
+Well... The answer is pretty straight up, we want a dashboard so we will store all the different guild's configs inside of it.<br>
+We will start by installing our RethinkDB API wrapper for Node.js (There are many but we will go with [RethinkDBDash](https://www.npmjs.com/package/rethinkdbdash))<br>
+Let's get into our console and run the next command **`npm install rethinkdbdash`**<br>
+Great, We've got it!<br>
+Go to your `main.js` file and require rethinkdbdash as `r`<br>
+```js
+const r = require('rethinkdbdash')
+```
+But we want to connect into our database<br>
+Let's invoke `rethinkdbdash` connection function<br>
+```js
+const r = require('rethinkdbdash')({db: 'Dashcord', servers: [{host: 'localhost', port: 28015}]});
+```
+Great! let's test if we are connected. go ahead and boot up your RethinkDB server and run `node main.js` in the console<br>
+Did you get the next message: `Creating a pool connected to localhost:28015`? If you did, you are good to go
