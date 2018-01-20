@@ -197,4 +197,53 @@ What we are doing in this line is basically fetching the specific guild from our
 Client.guildsConfig.set(guild.id, config ? config : null)
 ```
 Ok so basically we are pushing the guild into our Collection we've created earlier, and we're using the `guild.id` as the key<br>
-And the actual data is the config we've fetched from our database (If no config the code will insert `null`)
+And the actual data is the config we've fetched from our database (If no config the code will insert `null`)<br>
+This is what yuor ready event should look like right now:
+```js
+Client.on('ready', () => {
+    console.log('ready!');
+
+    for (let guild of guilds) {
+        let config = await r.table('Guilds').get(guild.id).run();
+        Client.guildsConfig.set(guild.id, config ? config : null);
+    }
+});
+```
+##### Using the data we've fetched
+In #Seday I've introduced a custom prefix feature. I'll will use the custom prefix for the next step<br>
+Ok, so we need to get our data into use, if we are going to make a custom prefix feature we would need a `message` event<br>
+Add the next line of code to your `main.js`
+```js
+Client.on('message', () => {
+
+});
+```
+Good! we got our message event up. let's add some code into it.
+```js
+const guild = message.guild;
+```
+In this line we are getting access to the guild the message was sent in.<br>
+Now, we want to load the specific guild's config we've stored into `Client.guildsConfig`<br>
+```js
+const guildConfig = Client.guildsConfig.get(guild.id)
+``` 
+Basically we're getting the specifc config for the guild. Let's check the prefix and assign it.<br>
+```js
+let prefix = guildConfig && guildConfig.prefix ? guildConfig.prefix : '=' 
+```
+Ok. so I'm using here the [ternary operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator), if the guild has a prefix it will be the custom prefix, if not, `=` (Default prefix)<br>
+Let's make a basic command and check if it works<br>
+```js
+if (message.content.startsWith(`${prefix}hello`)) return message.channel.send('hello!!!');
+```
+And if you've followed everything, it should be listening to the custom prefix if you've set one and to `=` if you haven't.<br>
+This is what your message event should look like<br>
+```js
+Client.on('message', () => {
+    const guild = message.guild;
+    const guildConfig = Client.guildsConfig.get(guild.id);
+    let prefix = guildConfig && guildConfig.prefix ? guildConfig.prefix : '=';
+    
+    if (message.content.startsWith(`${prefix}hello`)) return message.channel.send('hello!!!');
+});
+```
