@@ -15,6 +15,11 @@ Those are the main parts, if you already have an operating bot I'm suggesting yo
         <li><a href="https://github.com/TheOnlyArtz/Seday/tree/master/src/Bot#coding-the-bot">Coding the bot</a></li>
     </ul>
     <p><b>Dashboard Integration</b></p>
+    <ul>
+        <li><a href="https://github.com/TheOnlyArtz/Seday/tree/master/src/Bot#adding-a-redirection-url-for-our-app">Adding a redirection URL for our app</a></li>
+        <li><a href="https://github.com/TheOnlyArtz/Seday/tree/master/src/Bot#connecting-our-bot-to-a-rethinkdb-database">Connecting our bot to our database</a></li>
+        <li><a href="https://github.com/TheOnlyArtz/Seday/tree/master/src/Bot#fetching-essential-data">Fetching essential data</a></li>
+    </ul>
 </div>
 
 ##### Creating a Discord app
