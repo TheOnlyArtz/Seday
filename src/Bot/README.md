@@ -19,6 +19,7 @@ Those are the main parts, if you already have an operating bot I'm suggesting yo
         <li><a href="https://github.com/TheOnlyArtz/Seday/tree/master/src/Bot#adding-a-redirection-url-for-our-app">Adding a redirection URL for our app</a></li>
         <li><a href="https://github.com/TheOnlyArtz/Seday/tree/master/src/Bot#connecting-our-bot-to-a-rethinkdb-database">Connecting our bot to our database</a></li>
         <li><a href="https://github.com/TheOnlyArtz/Seday/tree/master/src/Bot#fetching-essential-data">Fetching essential data</a></li>
+        <li><a href="https://github.com/TheOnlyArtz/Seday/tree/master/src/Bot/#using-the-data-weve-fetched">Using the data we've fetched</a></li>
     </ul>
 </div>
 
