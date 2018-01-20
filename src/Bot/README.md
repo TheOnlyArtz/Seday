@@ -5,7 +5,17 @@
 
 ### Bot part
 
-How can we have a dashboard for our bot without having a bot?
+How can we have a dashboard for our bot without having a bot?<br>
+Those are the main parts, if you already have an operating bot I'm suggesting you to start from `Dashboard Integration`<br>
+<div align="center"> 
+    <p><b>Creating a basic bot</b></p>
+    <ul>
+        <li><a href="https://github.com/TheOnlyArtz/Seday/tree/master/src/Bot#creating-a-discord-app">Creating a Discord app</a></li>
+        <li><a href="https://github.com/TheOnlyArtz/Seday/tree/master/src/Bot#bots-config">Bot's config</a></li>
+        <li><a href="https://github.com/TheOnlyArtz/Seday/tree/master/src/Bot#coding-the-bot">Coding the bot</a></li>
+    </ul>
+    <p><b>Dashboard Integration</b></p>
+</div>
 
 ##### Creating a Discord app
 
