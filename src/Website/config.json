@@ -1,7 +1,0 @@
-{
-  "scopes" : ["identify", "guilds"],
-  "clientID": "389086423191388160",
-  "clientSecret": "OogCxit0kkTp6-B-4PJBmP5MXb_Whpj6",
-  "dash_secret": "c77b24a5-19e5-4c0d-b4ef-124f01640751",
-  "redirect_uri": "http://localhost:3000/oauth/redirect"
-}
