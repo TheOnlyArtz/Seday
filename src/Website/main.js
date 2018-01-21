@@ -16,7 +16,6 @@ let r = require('rethinkdbdash')({db: 'Dashcord', servers: [{host: 'localhost', 
 module.exports.rethink = r;
 
 const GETRoutes = require('./routes/get.js')
-const POSTRoutes = require('./routes/post.js')
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const config = require('./config.json');
@@ -63,6 +62,5 @@ app.use(session({
 
 // Get routes
 app.use('/', GETRoutes);
-// Post routes
-app.use('/', POSTRoutes);
+
 
