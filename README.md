@@ -11,7 +11,7 @@
     <li><a href="https://www.npmjs.com/package/body-parser">body-parser</a></li>
     <li><a href="https://www.npmjs.com/package/cookie-parser">cookie-parser</a></li>
     <li><a href="https://www.npmjs.com/package/cookie-session">cookie-session</a></li>
-    <li><a href="https://www.npmjs.com/package/discord.js">discord.js</a> Framework being used by #Seday [bot sample](https://github.com/TheOnlyArtz/Seday/tree/master/src/Bot) for working with Discord API</li>
+    <li><a href="https://www.npmjs.com/package/discord.js">discord.js</a> Framework being used by #Seday <a href="https://github.com/TheOnlyArtz/Seday/tree/master/src/Bot">bot sample</a> for working with Discord API</li>
     <li><a href="https://www.npmjs.com/package/ejs">ejs</a> A templating engine</li>
     <li><a href="https://www.npmjs.com/package/express">express</a> A framework for creating web applications with node.js</li>
     <li><a href="https://www.npmjs.com/package/express-session">express-session</a> Create sessions for things like login systems</li>
