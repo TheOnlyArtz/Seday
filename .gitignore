@@ -1,3 +1,2 @@
 node_modules/
-src/config.json
-src/Bot/config.json
+config*
