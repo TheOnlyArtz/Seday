@@ -1,9 +1,8 @@
 const express = require('express');
 const querystring = require('querystring')
-
+const restUtils = require("../Rest/utils.js");
 const config = require('../config.json');
 
-const {post, get} = require('unirest');
 const {clientID, scopes, redirect_uri, clientSecret} = config;
 
 const Router = new express.Router();
@@ -11,11 +10,18 @@ const Router = new express.Router();
 const mainFunctions = require('../main.js');
 const r = mainFunctions['rethink'];
 
-Router.get('/', ifLoggedMiddleware, function(req, res) {
-  res.render('Home', {user: req.session.user, checkforperm: hasServerManagePerms})
+Router.get('/', restUtils.ifLoggedMiddleware, async (req, res) => {
+  // basically just update the user's data from the API.
+  let userData = await restUtils.fetchUserData(req, res);
+  req.session.user = userData.user
+
+  res.render('Home', {
+    user: req.session.user,
+     checkforperm: restUtils.hasServerManagePerms
+   });
 })
 
-Router.get('/login', function(req, res) {
+Router.get('/login',(req, res) => {
   if (req.session.user) {
     res.redirect('/');
   }
@@ -25,20 +31,25 @@ Router.get('/login', function(req, res) {
 });
 
 
-Router.get('/oauth/redirect', async function(req, res) {
-  initData(req, res);
+Router.get('/oauth/redirect', async (req, res) => {
+  let authDetails = await restUtils.exchangeAccessToken(config, req, res);
+  req.session["auth"] = authDetails.body;
+  let userData = await restUtils.fetchUserData(req, res);
+  req.session.user = userData.user
+  res.redirect("/");
 });
 
-Router.get('/me', ifLoggedMiddleware, function(req, res) {
+Router.get('/me', restUtils.ifLoggedMiddleware, (req, res) => {
   return res.set(200).send({user: req.session.user, auth: req.session.auth});
 });
 
-Router.get('/dashboard/:guildID?', ifLoggedMiddleware, async function(req, res) {
+Router.get('/dashboard/:guildID?', restUtils.ifLoggedMiddleware, async (req, res) => {
   let user = req.session.user.guilds.find(i => i.id === req.params.guildID);
-  if (!user || !hasServerManagePerms(req, user.permissions, true)) {
+  if (!user || !restUtils.hasServerManagePerms(req, user.permissions, true)) {
       return res.set(401)
       .send({message: 'Forbidden! You don\'t have permissions to edit this server\'s config', status: 401});
   }
+
   const guildData = await r.table('Guilds').get(req.params.guildID)
   res.render('Dashboard', {
       guildID: req.params.guildID,
@@ -46,58 +57,13 @@ Router.get('/dashboard/:guildID?', ifLoggedMiddleware, async function(req, res) 
     })
 })
 
-Router.get('*', function(req, res) {
+Router.get("/logout", (req, res) => {
+  req.session.destroy();
+  res.redirect("/");
+});
+
+Router.get('*', (req, res) => {
   return res.set(404).send({message: "Not found!"})
 })
 
 module.exports = Router;
-
-function ifLoggedMiddleware(req, res, next) {
-  if (req.session.user)
-    return next();
-
-  res.redirect('/login');
-}
-
-function hasServerManagePerms({session, params}, memberPerms, advancedLookup) {
-  for (let perm of [32]) {
-    if ((memberPerms & perm) !== perm) {
-      return false
-    }
-  }
-  if (advancedLookup) {
-    let inGuild = session.user.guilds.filter(i => i.id === params.guildID)[0];
-    if (!inGuild) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-function initData(req, res) {
-    const requestPayload = {
-    redirect_uri,
-    client_id: clientID,
-    grant_type: "authorization_code",
-    client_secret: clientSecret,
-    code: req.query.code,
-  }
-
-  post("https://discordapp.com/api/oauth2/token").send(requestPayload)
-    .headers({
-      "Content-Type": 'application/x-www-form-urlencoded',
-      "User-Agent": 'DiscordBot'
-      })
-    .end(function (response) {
-      const {access_token, refresh_token, expires_in, token_type} = response.body;
-      get("https://discordapp.com/api/users/@me").headers({'Authorization': `${token_type} ${access_token}`}).end(function(user) {
-        get("https://discordapp.com/api/users/@me/guilds").headers({'Authorization': `${token_type} ${access_token}`}).end(function(guilds) {
-          req.session.auth = response['body'];
-          req.session.user = user['body'];
-          req.session.user.guilds = guilds['body'];
-          res.redirect('/');
-        })
-      })
-    });
-}
