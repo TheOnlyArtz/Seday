@@ -13,7 +13,7 @@
 		<div class="row">
 			<div class="center-align">
 			<% for (let i = 0; i < user.guilds.length; i++) { %>
-				<% if (checkforperm(user.guilds[i].permissions) === false) continue; %>
+				<% if (!checkforperm({}, user.guilds[i].permissions, false)) continue; %>
 				<% let iconURL = `https://cdn.discordapp.com/icons/${user.guilds[i].id}/${user.guilds[i].icon}.jpg` %>
 				<div class="col s3">
 					<a href="/dashboard/<%= user.guilds[i].id %>">
