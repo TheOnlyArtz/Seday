@@ -2,5 +2,6 @@
   "scopes" : ["identify", "guilds"],
   "clientID": "ID",
   "clientSecret": "SECRET",
-  "dash_secret": "SECRET"
+  "dash_secret": "SECRET",
+  "redirect_uri": "http://localhost:3000/oauth/redirect"
 }
