@@ -90,7 +90,7 @@ function initData(req, res) {
       "User-Agent": 'DiscordBot'
       })
     .end(function (response) {
-      const {access_token, refresh_token, expires_in} = response.body;
+      const {access_token, refresh_token, expires_in, token_type} = response.body;
       get("https://discordapp.com/api/users/@me").headers({'Authorization': `${token_type} ${access_token}`}).end(function(user) {
         get("https://discordapp.com/api/users/@me/guilds").headers({'Authorization': `${token_type} ${access_token}`}).end(function(guilds) {
           req.session.auth = response['body'];
