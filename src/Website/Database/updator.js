@@ -1,4 +1,3 @@
-
 const updators = require('./updators')
 async function updator (rethinkDB, eventName, value, guildID) {
 
