@@ -35,10 +35,10 @@ Router.get('/me', ifLoggedMiddleware, function(req, res) {
 
 
 Router.get('/dashboard/:guildID?', ifLoggedMiddleware, async function(req, res) {
-        let founded = req.session.user.guilds.find(i => i.id === req.params.guildID)
-        if (!req.session.user.guilds.filter(i => i.id === req.params.guildID)[0] || hasServerManagPerms(founded.permissions) === false) {
-            return res.set(401).send({message: 'Forbidden! You don\'t have permissions to edit this server\'s config', status: 401})
-        }
+  let founded = req.session.user.guilds.find(i => i.id === req.params.guildID)
+  if (!req.session.user.guilds.filter(i => i.id === req.params.guildID)[0] || hasServerManagPerms(founded.permissions) === false) {
+      return res.set(401).send({message: 'Forbidden! You don\'t have permissions to edit this server\'s config', status: 401})
+  }
   const guildData = await r.table('Guilds').get(req.params.guildID)
   res.render('Dashboard', {
       guildID: req.params.guildID,
@@ -53,9 +53,9 @@ Router.get('*', function(req, res) {
 module.exports = Router;
 
 function ifLoggedMiddleware(req, res, next) {
-  if (req.session.user) 
+  if (req.session.user)
     return next();
- 
+
   res.redirect('/login');
 }
 
@@ -78,15 +78,15 @@ function initData(req, res) {
     code: req.query.code,
   }
 
-    post("https://discordapp.com/api/oauth2/token").query(requestPayload)
+    post("https://discordapp.com/api/oauth2/token").send(requestPayload)
       .headers({
         "Content-Type": 'application/x-www-form-urlencoded',
         "User-Agent": 'DiscordBot'
         })
       .end(function (response) {
         const {access_token, refresh_token, expires_in} = response.body;
-        get("https://discordapp.com/api/users/@me").headers({'Authorization': `Bearer ${access_token}`}).end(function(user) {
-          get("https://discordapp.com/api/users/@me/guilds").headers({'Authorization': `Bearer ${access_token}`}).end(function(guilds) {
+        get("https://discordapp.com/api/users/@me").headers({'Authorization': `${token_type} ${access_token}`}).end(function(user) {
+          get("https://discordapp.com/api/users/@me/guilds").headers({'Authorization': `${token_type} ${access_token}`}).end(function(guilds) {
             req.session.auth = response['body'];
             req.session.user = user['body'];
             req.session.user.guilds = guilds['body'];
