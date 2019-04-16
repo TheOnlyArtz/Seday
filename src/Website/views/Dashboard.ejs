@@ -18,10 +18,8 @@
 		$(document).ready(function() {
 
             //connect to socket
-            const socket = io.connect();
+      const socket = io.connect();
 
-
-            console.log($('#prefixChangeBtn button'))
 			$('#prefixChangeBtn button').click(function() {
 				let formString = '<form id="prefixForm">\
 					<input required name="prefixCtx" id="prefixTxt" type="text" placeholder="prefix" style="width: 10%"/>\
@@ -30,15 +28,14 @@
 				$('#prefixChangeBtn').html(formString);
 				$("#prefixChangeBtn input").focus();
 
-                const prefixForm = $('#prefixForm');
-                const prefixTxt = $('#prefixTxt');
+        const prefixForm = $('#prefixForm');
+        const prefixTxt = $('#prefixTxt');
 
-                prefixForm.submit(function(e) {
-                    e.preventDefault();
-                    socket.emit('new prefix', prefixTxt.val(), "<%= guildID %>");
-                    location.reload();
-                })
-
+        prefixForm.submit(function(e) {
+            e.preventDefault();
+            socket.emit('new prefix', prefixTxt.val(), "<%= guildID %>");
+            location.reload();
+        })
 			});
 		});
 	</script>
