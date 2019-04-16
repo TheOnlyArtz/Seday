@@ -56,11 +56,8 @@ app.use(session({
     saveUninitialized: true,
     cookie: {
       httpOnly: true,
-      expires: new Date(253402300000000)
+      expires: new Date(25340230000000)
     }
 }));
-
 // Get routes
 app.use('/', GETRoutes);
-
-
