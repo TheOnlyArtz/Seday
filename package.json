@@ -17,22 +17,22 @@
   },
   "homepage": "https://github.com/theonlyartz/dashcord#readme",
   "dependencies": {
-    "body-parser": "^1.18.2",
+    "body-parser": "^1.18.3",
     "connect-loki": "^1.1.0",
-    "cookie-parser": "^1.4.3",
+    "cookie-parser": "^1.4.4",
     "cookie-session": "^2.0.0-beta.3",
-    "discord.js": "^11.3.0",
-    "ejs": "^2.5.7",
-    "express": "^4.16.2",
-    "express-session": "^1.15.6",
-    "helmet": "^3.9.0",
+    "discord.js": "^11.4.2",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-session": "^1.16.1",
+    "helmet": "^3.16.0",
     "mz": "^2.7.0",
     "querystring": "^0.2.0",
     "rethinkdbdash": "^2.3.31",
     "session-rethinkdb": "^2.0.1",
-    "socket.io": "^2.0.4",
-    "socket.io-client": "^2.0.4",
-    "unirest": "^0.5.1",
-    "uuid": "^3.1.0"
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0",
+    "unirest": "^0.6.0",
+    "uuid": "^3.3.2"
   }
 }
