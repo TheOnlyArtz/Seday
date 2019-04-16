@@ -16,11 +16,11 @@
 	</style>
 	<script type="text/javascript">
 		$(document).ready(function() {
-            
+
             //connect to socket
             const socket = io.connect();
-            
-            
+
+
             console.log($('#prefixChangeBtn button'))
 			$('#prefixChangeBtn button').click(function() {
 				let formString = '<form id="prefixForm">\
@@ -29,22 +29,22 @@
 				</form>'
 				$('#prefixChangeBtn').html(formString);
 				$("#prefixChangeBtn input").focus();
-                
+
                 const prefixForm = $('#prefixForm');
                 const prefixTxt = $('#prefixTxt');
-                
+
                 prefixForm.submit(function(e) {
                     e.preventDefault();
                     socket.emit('new prefix', prefixTxt.val(), "<%= guildID %>");
                     location.reload();
                 })
-                
+
 			});
 		});
 	</script>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">
 </head>
-<body style="background-color: #97c6c6">
+<body style="background-color: #ffdf80">
 
 	<div class="container">
 		<div class="row">
